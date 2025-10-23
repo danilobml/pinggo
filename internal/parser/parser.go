@@ -1,4 +1,4 @@
-package pinger
+package parser
 
 import (
 	"bufio"
@@ -9,7 +9,7 @@ import (
 	"github.com/danilobml/pinggo/internal/helpers"
 )
 
-func getUrlsFromFile(filePath string) ([]string, error) {
+func GetUrlsFromFile(filePath string) ([]string, error) {
 	ext := path.Ext(filePath)
 	if ext != ".txt" {
 		return nil, errs.ErrInvalidInputFile

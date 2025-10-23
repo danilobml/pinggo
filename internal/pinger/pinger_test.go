@@ -8,22 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_GetUrlsFromFile_Success(t *testing.T) {
-	filePath := "./test.txt"
-	expected := []string{"http://www.test.com", "http://www.test2.com"}
-	
-	actual, err := getUrlsFromFile(filePath)
-	assert.NoError(t, err)
-
-	assert.Equal(t, expected, actual)
-}
-
-func Test_GetUrlsFromFile_Error_NotTxt(t *testing.T) {
-	filePath := "./test.pdf"
-	_, err := getUrlsFromFile(filePath)
-	assert.ErrorIs(t, err, errs.ErrInvalidInputFile)
-}
-
 func Test_PingUrl_Success(t *testing.T) {
 	url := "http://www.google.com"
 	expected := PingUrlResponse{

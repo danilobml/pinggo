@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/danilobml/pinggo/internal/errs"
+	"github.com/danilobml/pinggo/internal/parser"
 )
 
 type PingUrlResponse struct {
@@ -15,7 +16,7 @@ type PingUrlResponse struct {
 }
 
 func PingFileUrls(filePath string) error {
-	urls, err := getUrlsFromFile(filePath)
+	urls, err := parser.GetUrlsFromFile(filePath)
 	if err != nil {
 		return err
 	}
@@ -24,7 +25,6 @@ func PingFileUrls(filePath string) error {
 		pingResponse, _ := pingUrl(url)
 		fmt.Printf("%+v\n", pingResponse)
 	}
-
 
 	return nil
 }
