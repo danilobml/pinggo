@@ -10,7 +10,7 @@ import (
 
 func Test_GetUrlsFromFile_Success(t *testing.T) {
 	filePath := "./test.txt"
-	expected := []string{"test.com", "test2.com"}
+	expected := []string{"http://www.test.com", "http://www.test2.com"}
 	
 	actual, err := getUrlsFromFile(filePath)
 	assert.NoError(t, err)
@@ -40,7 +40,7 @@ func Test_PingUrl_Success(t *testing.T) {
 }
 
 func Test_PingUrl_Error(t *testing.T) {
-	url := "http://www.google.coms"
+	url := "http://www.not-google.com"
 	expected := PingUrlResponse{
 		Error: true,
 	}

@@ -1,2 +1,3 @@
-test.com
-test2.com
+http://www.test.com
+http://www.test2.com
+not-a-url.com

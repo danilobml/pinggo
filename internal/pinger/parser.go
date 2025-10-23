@@ -6,6 +6,7 @@ import (
 	"path"
 
 	"github.com/danilobml/pinggo/internal/errs"
+	"github.com/danilobml/pinggo/internal/helpers"
 )
 
 func getUrlsFromFile(filePath string) ([]string, error) {
@@ -25,7 +26,9 @@ func getUrlsFromFile(filePath string) ([]string, error) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		url := scanner.Text()
-		urls = append(urls, url)
+		if helpers.IsValidURL(url) {
+			urls = append(urls, url)
+		}
 	}
 
 	err = scanner.Err()
