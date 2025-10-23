@@ -10,5 +10,5 @@ func main() {
 	filePath := flag.String("from-file", "", "Pass a .txt file path to read the URLs to ping from it.")
 	flag.Parse()
 
-	pinger.PingFiles(*filePath)
+	pinger.PingFileUrls(*filePath)
 }

@@ -1,51 +1,50 @@
 package pinger
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"path"
+	"net/http"
+	"time"
 
 	"github.com/danilobml/pinggo/internal/errs"
 )
 
-func PingFiles(filePath string) error {
+type PingUrlResponse struct {
+	StatusCode int
+	Error bool
+	Latency time.Duration
+}
+
+func PingFileUrls(filePath string) error {
 	urls, err := getUrlsFromFile(filePath)
 	if err != nil {
 		return err
 	}
 
 	for _, url := range urls {
-		fmt.Println(url)
+		pingResponse, _ := pingUrl(url)
+		fmt.Printf("%+v\n", pingResponse)
 	}
+
 
 	return nil
 }
 
-func getUrlsFromFile(filePath string) ([]string, error) {
-	ext := path.Ext(filePath)
-	if ext != ".txt" {
-		return nil, errs.ErrInvalidInputFile
+func pingUrl(url string) (PingUrlResponse, error) {
+	start := time.Now()
+    resp, err := http.Get(url)
+    if err != nil {
+        return PingUrlResponse{
+			Error: true,
+		}, errs.ErrPingFailed
+    }
+	latency := time.Since(start)
+    defer resp.Body.Close()
+
+	pingResp := PingUrlResponse{
+		StatusCode: resp.StatusCode,
+		Error: false,
+		Latency: latency,
 	}
 
-	file, err := os.Open(filePath)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	urls := []string{}
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		url := scanner.Text()
-		urls = append(urls, url)
-	}
-
-	err = scanner.Err()
-	if err != nil {
-		return nil, err
-	}
-
-	return urls, nil
+	return pingResp, nil
 }
