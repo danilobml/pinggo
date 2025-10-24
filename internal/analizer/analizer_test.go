@@ -1,4 +1,4 @@
-package output
+package analizer
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_FormatSummary_Success(t *testing.T) {
+func Test_GenerateSummary_Success(t *testing.T) {
 	input := models.PingerResponse{
 		{
 			Url: "www.test.com",
@@ -38,7 +38,7 @@ func Test_FormatSummary_Success(t *testing.T) {
 		FailedUrls: []string{"www.fail-test.com"},
 	}
 
-	actual := FormatSummary(input)
+	actual := GenerateSummary(input)
 
 	assert.Equal(t, expected, actual)
 }

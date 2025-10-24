@@ -1,4 +1,4 @@
-package output
+package analizer
 
 import (
 	"time"
@@ -8,7 +8,7 @@ import (
 
 const SlowThreshold = 999 * time.Millisecond
 
-func FormatSummary(results models.PingerResponse) models.SummaryResponse {
+func GenerateSummary(results models.PingerResponse) models.SummaryResponse {
 	summary := models.SummaryResponse{}
 	totalLatency := time.Duration(0)
 

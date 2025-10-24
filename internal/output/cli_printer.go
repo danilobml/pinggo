@@ -7,7 +7,7 @@ import (
 )
 
 func PrintSummary(results models.SummaryResponse) {
-	fmt.Println("**PING RESULTS SUMMARY:**")
+	fmt.Println("**PINGGO RESULTS SUMMARY:**")
 
 	fmt.Println()
 

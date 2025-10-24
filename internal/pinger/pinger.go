@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/danilobml/pinggo/internal/analizer"
 	"github.com/danilobml/pinggo/internal/errs"
 	"github.com/danilobml/pinggo/internal/models"
 	"github.com/danilobml/pinggo/internal/output"
@@ -28,7 +29,7 @@ func PingFileUrls(filePath string, options Options) error {
 	}
 
 	if options.Summary {
-		summary := output.FormatSummary(pingerResponse)
+		summary := analizer.GenerateSummary(pingerResponse)
 		output.PrintSummary(summary)
 	}
 
