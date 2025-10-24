@@ -5,19 +5,22 @@ import (
 	"time"
 
 	"github.com/danilobml/pinggo/internal/errs"
+	"github.com/danilobml/pinggo/internal/models"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_PingUrl_Success(t *testing.T) {
 	url := "http://www.google.com"
-	expected := PingUrlResponse{
+	expected := models.Result{
+		Url:        url,
 		StatusCode: 200,
-		Error: false,
+		Error:      false,
 	}
-	
+
 	actual, err := pingUrl(url)
 	assert.NoError(t, err)
 
+	assert.Equal(t, expected.Url, actual.Url)
 	assert.Equal(t, expected.StatusCode, actual.StatusCode)
 	assert.Equal(t, expected.Error, actual.Error)
 	assert.IsType(t, time.Duration(0), actual.Latency)
@@ -25,10 +28,11 @@ func Test_PingUrl_Success(t *testing.T) {
 
 func Test_PingUrl_Error(t *testing.T) {
 	url := "http://www.not-google.com"
-	expected := PingUrlResponse{
+	expected := models.Result{
+		Url:   url,
 		Error: true,
 	}
-	
+
 	actual, err := pingUrl(url)
 	assert.ErrorIs(t, err, errs.ErrPingFailed)
 
