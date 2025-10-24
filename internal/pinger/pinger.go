@@ -32,7 +32,7 @@ func PingFileUrls(filePath string, options Options) error {
 	summary := analizer.GenerateSummary(pingerResponse)
 
 	if options.PrintSummary {
-		output.PrintSummary(summary)
+		output.PrintTable(summary)
 	}
 
 	if options.PrintJson {
