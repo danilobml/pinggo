@@ -12,7 +12,8 @@ import (
 )
 
 type Options struct {
-	Summary bool
+	PrintSummary bool
+	PrintJson bool
 }
 
 func PingFileUrls(filePath string, options Options) error {
@@ -28,9 +29,14 @@ func PingFileUrls(filePath string, options Options) error {
 		pingerResponse = append(pingerResponse, pingResponse)
 	}
 
-	if options.Summary {
-		summary := analizer.GenerateSummary(pingerResponse)
+	summary := analizer.GenerateSummary(pingerResponse)
+
+	if options.PrintSummary {
 		output.PrintSummary(summary)
+	}
+
+	if options.PrintJson {
+		output.PrintJson(summary)
 	}
 
 	return nil

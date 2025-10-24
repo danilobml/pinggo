@@ -9,13 +9,16 @@ import (
 func main() {
 	filePath := flag.String("from-file", "", "Pass a .txt file path to read the URLs to ping from it.")
 
-	noSummary := flag.Bool("no-summary", false, "Set this boolean flag, if you don't want a summary to be printed to the CLI (default false).")
+	noCli := flag.Bool("no-cli", false, "Set this boolean flag, if you don't want a summary to be printed to the CLI (default false).")
+	
+	printJson := flag.Bool("json", false, "Set this boolean flag to create a json file with results.")
 	
 	flag.Parse()
 
-	options := pinger.Options{}
-
-	options.Summary = !*noSummary
+	options := pinger.Options{
+		PrintSummary: !*noCli,
+		PrintJson: *printJson,
+	}
 
 	pinger.PingFileUrls(*filePath, options)
 }
