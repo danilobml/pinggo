@@ -24,15 +24,25 @@ go mod tidy
 
 ## Usage
 
+### Makefile Targets
+
+| Command | Description |
+|----------|-------------|
+| `make run` | Run the CLI with default file (`urls.txt`) |
+| `make run_json` | Run the CLI with default file (`urls.txt`) and outputs a json file (`results.json`)|
+| `make test` | Run unit tests |
+
+
 ### 1. Run with a text file of URLs
 ```bash
 make run --from-file ./urls.txt
 ```
-Example file (`test.txt`):
+Example file (`urls.txt`):
 ```
 https://www.google.com
 https://www.github.com
 http://nonexistent.website
+...
 ```
 
 ### 2. Run directly with flags
@@ -142,16 +152,6 @@ make test
 
 ---
 
-## Makefile Targets
-
-| Command | Description |
-|----------|-------------|
-| `make run` | Run the CLI with default file (`urls.txt`) |
-| `make run_json` | Run the CLI with default file (`urls.txt`) and outputs a json file (`results.json`)|
-| `make test` | Run unit tests |
-
----
-
 ## License
 
-MIT License © 2025 Your Name
+MIT License © 2025 Danilo Barolo Martins de Lima
