@@ -12,12 +12,14 @@ func main() {
 	noCli := flag.Bool("no-cli", false, "Set this boolean flag, if you don't want a summary to be printed to the CLI (default false).")
 	
 	printJson := flag.Bool("json", false, "Set this boolean flag to create a json file with results.")
-	
+
+	concurrency := flag.Int("concurrency", 0, "Sets the number of concurrent routines")
 	flag.Parse()
 
 	options := pinger.Options{
 		PrintSummary: !*noCli,
 		PrintJson: *printJson,
+		Concurrency: *concurrency,
 	}
 
 	pinger.PingFileUrls(*filePath, options)
