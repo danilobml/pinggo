@@ -26,7 +26,7 @@ go mod tidy
 
 ### 1. Run with a text file of URLs
 ```bash
-make run
+make run --from-file ./urls.txt
 ```
 Example file (`test.txt`):
 ```
@@ -37,7 +37,7 @@ http://nonexistent.website
 
 ### 2. Run directly with flags
 ```bash
-go run ./cmd --json --from-file ./test.txt --concurrency 10
+go run ./cmd --json --from-file ./urls.txt --concurrency 10
 ```
 
 ### `--json`
@@ -57,7 +57,7 @@ Empty or commented lines (`#`) are ignored.
 
 **Usage:**
 ```bash
-go run ./cmd --from-file ./test.txt
+go run ./cmd --from-file ./urls.txt
 ```
 
 ---
@@ -82,26 +82,62 @@ make test
 
 ### Table mode
 ```
-URL                      STATUS  LATENCY     ERROR
-------------------------------------------------------
-https://google.com       200     123.3ms     -
-https://github.com       200     187.2ms     -
-http://nonexistent.xyz   -       -           dial tcp: lookup failed
-
-SUMMARY:
-Total: 3, Success: 2, Failed: 1, Avg Latency: 155.3ms
++----------------------------------------------------------------+
+| Ping Summary Report                                            |
++----------------------------+-----------------------------------+
+| METRIC                     | VALUE                             |
++----------------------------+-----------------------------------+
+| Total Successes            | 6                                |
+| Total Slow Pings (> 1 sec) | 2                                 |
+| Total Errors               | 4                                 |
+| Average Latency (µs)       | 315526                            |
++----------------------------+-----------------------------------+
+| Successful URLs            |                                   |
+|                            | https://stackoverflow.com         |
+|                            | https://www.wikipedia.org         |
+|                            | https://www.bbc.co.uk             |
+|                            | https://www.google.com            |
+|                            | https://www.facebook.com          |
+|                            | https://httpbin.org/status/404    |
++----------------------------+-----------------------------------+
+| Slow URLs                  |                                   |
+|                            | https://httpbin.org/status/500    |
+|                            | https://httpbin.org/status/404    |
++----------------------------+-----------------------------------+
+| Failed URLs                |                                   |
+|                            | https://httpstat.us/503           |
+|                            | https://httpstat.us/500           |
+|                            | https://untrusted-root.badssl.com |
+|                            | https://httpbin.org/delay/5       |
++----------------------------+-----------------------------------+
 ```
 
 ### JSON mode
 ```json
 {
-  "results": [
-    {"url":"https://google.com","status":200,"latency_ms":123,"error":""},
-    {"url":"https://github.com","status":200,"latency_ms":187,"error":""},
-    {"url":"http://nonexistent.xyz","status":0,"latency_ms":0,"error":"lookup failed"}
+  "average_latency_microseconds": 360511,
+  "failed_requests": 3,
+  "failed_urls": [
+    "https://self-signed.badssl.com",
+    "https://untrusted-root.badssl.com",
+    "https://httpbin.org/delay/5"
   ],
-  "summary": {"total":3,"success":2,"failed":1,"avg_latency_ms":155}
+  "slow_requests": 1,
+  "slow_urls": [
+    "https://httpbin.org/status/404"
+  ],
+  "successful_urls": [
+    "https://stackoverflow.com",
+    "https://www.wikipedia.org",
+    "https://www.bbc.co.uk",
+    "https://www.google.com",
+    "https://www.github.com",
+    "https://www.nytimes.com",
+    "https://www.amazon.com"
+  ],
+  "total_successes": 7
 }
+
 ```
 
 ---
